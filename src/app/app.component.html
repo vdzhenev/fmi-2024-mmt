@@ -1,0 +1,14 @@
+<h1>{{title}}</h1>
+<mat-toolbar color="primary" fxLayout="row nowrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+  <mat-toolbar-row>
+    <button mat-button (click)="showView('single')">Single</button>
+    <button mat-button (click)="showView('latest')">Recipes</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<span [ngSwitch]="currentView">
+  <app-recipe-detail *ngSwitchCase="'single'" />
+  <app-recipe-list *ngSwitchDefault />
+</span>
+
+
+<router-outlet />

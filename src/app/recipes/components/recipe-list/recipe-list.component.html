@@ -1,0 +1,76 @@
+<mat-toolbar color="primary" fxLayout="row nowrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+  <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-xs>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div fxShow="true" fxHide.lt-sm>
+    <button mat-button (click)="setView('latest')">Latest Recipes</button>
+    <button mat-button (click)="setView('all')">All Recipes</button>
+    <button mat-button (click)="onAddRecipe()">
+      <mat-icon>add-circle</mat-icon>
+      Create new
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <button mat-list-item (click)="setView('latest')">Latest Recipes</button>
+      <button mat-list-item (click)="setView('all')">All Recipes</button>
+      <button mat-list-item (click)="onAddRecipe()">
+        <mat-icon>add-circle</mat-icon>
+        Create new
+      </button>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>
+
+<div *ngIf="errors" class="errors">{{errors}}</div>
+<div *ngIf="messages" class="messages">{{messages}}</div>
+
+<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
+  <div *ngIf="currentView == 'latest'" fxLayout="column" class="recipe-card-container" fxLayoutGap="10px">
+    <mat-card *ngFor="let recipe of recipes | slice:0:10" class="recipe-card"
+      [class.selected]="recipe.id === selectedRecipe?.id" (click)="selectRecipe(recipe)">
+      <mat-card-header class="recipe-header" (click)="setMode('present')">
+        <mat-card-title>{{recipe.title}}</mat-card-title>
+        <mat-card-subtitle>Published: {{recipe.publishDate | date:'MMM d, y, h:mm:ss a'}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="recipe.imageUrl" [alt]="'Photo of ' + recipe.title">
+      <mat-card-content class="recipe-content">
+        <p>{{ recipe.content | slice:0:150 }}...</p>
+      </mat-card-content>
+      <mat-card-footer class="recipe-footer">
+        Tags: {{recipe.tags}}
+      </mat-card-footer>
+    </mat-card>
+  </div>
+
+  <div *ngIf="currentView == 'all'" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
+    <div fxLayout="column" class="recipe-card-container-small" fxLayoutGap="10px">
+      <mat-card *ngFor="let recipe of recipes" class="recipe-card-small"
+        [class.selected]="recipe.id === selectedRecipe?.id" (click)="selectRecipe(recipe)">
+        <mat-card-header class="recipe-header-small" (click)="setMode('present')">
+          <div mat-card-avatar class="recipe-header-image">
+            <img [src]="recipe.imageUrl" [alt]="recipe.title" class="thumbnail">
+          </div>
+          <mat-card-title>{{recipe.title}} - {{recipe.publishDate | date:'MMM d, y, h:mm:ss a'}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="setMode('edit')">
+            <mat-icon mat-button>edit</mat-icon>
+          </button>
+          <button mat-raised-button color="warn" (click)="onDeleteRecipe(recipe)">
+            <mat-icon mat-button>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <app-recipe-detail *ngIf="selectedRecipe"
+    [recipe]="selectedRecipe" [mode]="currentMode"
+    (recipeModified)="onRecipeModified($event)"
+    (recipeCanceled)="onRecipeCanceled()">
+  </app-recipe-detail>
+</div>

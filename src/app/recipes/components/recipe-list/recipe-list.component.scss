@@ -1,0 +1,66 @@
+:host {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+  
+  .recipe-list-header {
+    width: 100%;
+  }
+  
+  .recipe-card-container {
+    padding: 20px;
+    width: 25vw;
+    min-width: 320px;
+    margin-bottom: 20px;
+  }
+  
+  .recipe-card {
+    width: 100%;
+  }
+  
+  .recipe-content {
+    overflow-y: hidden;
+    max-height: 100px;
+  }
+
+  .recipe-footer {
+    background-color: lightsteelblue;
+  }
+
+  .recipe-card:hover {
+    background-color: lightgoldenrodyellow;
+  }
+  
+  .recipe-card.active {
+    background-color: blanchedalmond;
+  }
+  
+  .recipe-header {
+    width: 100%;
+  }
+  
+  .recipe-header-image {
+    margin-right: 15px;
+  }
+  
+  .recipe-header-image.mat-card-avatar img {
+    width:60px;
+  
+  }
+  
+  .mat-card-image:first-child {
+    overflow: hidden;
+    border-radius: 5px;
+    margin-left: -15px;
+    margin-top:  0;
+    background: transparent;
+  }
+  
+  .mdc-button {
+    margin-left: 8px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+  }
